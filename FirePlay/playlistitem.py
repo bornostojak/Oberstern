@@ -41,7 +41,7 @@ class PlaylistItem(object):
         self.OriginalTrajanje = list(xmlitem)[30].text
     
     def __str__(self):
-        return f"{self.Autor} by {self.Naziv}\n"
+        return f"{self.Autor} by {self.Naziv}"
 
     def __repr__(self):
         return self.__str__()

@@ -11,7 +11,7 @@ class Playlist(object):
     def __str__(self):
         tmp = ""
         for i in self.Items:
-            tmp+=str(i)
+            tmp+=str(i)+"\n"
         return f"<PlayList>\n{tmp}</PlayList>"
     
     def __repr__(self):
