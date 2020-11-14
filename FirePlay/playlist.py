@@ -1,0 +1,23 @@
+import xml.etree.ElementTree as ElementTree
+import datetime
+from datetime import datetime as dt
+from datetime import timedelta
+from .playlistitem import PlaylistItem
+
+class Playlist(object):
+    def __init__(self, xmltree):
+        self.Items = [PlaylistItem(item) for item in list(xmltree)]
+
+    def __str__(self):
+        tmp = ""
+        for i in self.Items:
+            tmp+=str(i)
+        return f"<PlayList>\n{tmp}</PlayList>"
+    
+    def __repr__(self):
+        return str(self.__str__().encode('utf-8').decode('utf-8'))
+    
+    def get_xml_element(self):
+        return ElementTree.fromstring(self.__str__().encode(encoding))
+    
+
