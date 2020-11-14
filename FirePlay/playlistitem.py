@@ -41,7 +41,31 @@ class PlaylistItem(object):
         self.OriginalTrajanje = list(xmlitem)[30].text
     
     def __str__(self):
-        return f"""<PlayItem>
+        return f"{self.Autor} by {self.Naziv}"
+
+    def __repr__(self):
+        return self.__str__()
+
+    def to_xml_element(self):
+        return ElementTree.fromstring(str(self))
+
+    def get_time(self):
+        return dt.fromisoformat(self.Vrijeme)
+
+    def get_duration_as_timedelta(self):
+        return timedelta(seconds=float(self.Trajanje))
+
+    def get_time_of_next(self):
+        return self.get_time()+self.get_duration_as_timedelta()
+
+
+
+
+
+
+
+
+"""<PlayItem>
 <ID>{self.ID}</ID>
 <Naziv>{self.Naziv}</Naziv>
 <Autor>{self.Autor}</Autor>
@@ -75,18 +99,3 @@ class PlaylistItem(object):
 <OriginalTrajanje>{self.OriginalTrajanje}</OriginalTrajanje>
 </PlayItem>\n
 """
-
-    def __repr__(self):
-        return self.__str__()
-
-    def to_xml_element(self):
-        return ElementTree.fromstring(str(self))
-
-    def get_time(self):
-        return dt.fromisoformat(self.Vrijeme)
-
-    def get_duration_as_timedelta(self):
-        return timedelta(seconds=float(self.Trajanje))
-
-    def get_time_of_next(self):
-        return self.get_time()+self.get_duration_as_timedelta()
