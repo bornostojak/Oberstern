@@ -6,7 +6,7 @@ from datetime import datetime as dt
 from datetime import timedelta
 
 
-class PlaylistItem(object):
+class PlayItem(object):
     def __init__(self, xmlitem):
         self.ID = list(xmlitem)[0].text
         self.Naziv = list(xmlitem)[1].text

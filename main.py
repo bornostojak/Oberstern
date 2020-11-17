@@ -1,4 +1,4 @@
-from FirePlay import PlaylistItem
+from FirePlay import PlayItem, PlayList
 from pydub import AudioSegment
 import xml.etree.ElementTree as ElementTree
 import codecs
@@ -46,6 +46,6 @@ for e in encodings:
 
 
 
-playlistitems = [PlaylistItem(item) for item in list(tree) if item.tag=="PlayItem"]
+playitems = [PlayItem(item) for item in list(tree) if item.tag=="PlayItem"]
 output = MixdownItems(playlistitems)
 
