@@ -1,4 +1,4 @@
-from FirePlay import PlayItem, PlayList
+from fireplay import PlayItem, PlayList
 from pydub import AudioSegment
 import xml.etree.ElementTree as ElementTree
 import codecs
