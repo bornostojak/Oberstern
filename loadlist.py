@@ -4,10 +4,8 @@ from xml.etree import ElementTree
 def load(filename=None):
     if filename == None: return None
 
-    print("filename: ", filename)
     tree=None
     with open(filename, 'br') as file:
-        #data = file.read()
         for enc in ['utf-8', 'windows-1250', 'windows-1252']:
             try:
                 tree = ElementTree.fromstring(file.read().decode(enc))
@@ -16,5 +14,4 @@ def load(filename=None):
             except:
                 file.seek(0)
                 pass
-    print("returning tree")
     return tree
