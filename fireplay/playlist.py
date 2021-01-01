@@ -10,6 +10,9 @@ class PlayList(object):
 
     @classmethod
     def fromxmltree(cls, xmltree):
+        if xmltree.__class__ is not ElementTree.Element:
+            raise TypeError('The object is not a valid xml.etree.ElementTree.Element object!')
+
         self = cls()
         self.Items = [PlayItem.fromxmlelement(item) for item in list(xmltree)]
         return self
@@ -27,7 +30,7 @@ class PlayList(object):
         return f"<PlayList>\n{tmp}</PlayList>"
      
     def __repr__(self):
-        return f"Playlist from {self.Items[0].Vrijeme} to {self.Items[len(self.Items)-1].EndOfSong})"
+        return f"Playlist from {self.Items[0].Vrijeme} to {self.Items[len(self.Items)-1].EndOfSong}"
      
     def __list__(self):
         return self.Items

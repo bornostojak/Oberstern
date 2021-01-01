@@ -1,8 +1,8 @@
 from datetime import datetime as dt
 from datetime import timedelta
+from dicttoxml import dicttoxml
 import xml.etree.ElementTree as ElementTree
 import json
-from dicttoxml import dicttoxml
 
 
 class PlayItem(object):
@@ -24,6 +24,9 @@ class PlayItem(object):
         Create a PlayItem from a xml.etree.ElementTree element containing PlayItem data.
 
         """
+
+        if xmlitem.__class__ is not ElementTree.Element:
+            raise TypeError('The object is not a valid xml.etree.ElementTree.Element object!')
 
         self = cls()
         self.ID = int(xmlitem[0].text)
