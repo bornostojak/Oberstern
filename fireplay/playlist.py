@@ -5,22 +5,33 @@ from datetime import timedelta
 from .playitem import PlayItem
 
 class PlayList(object):
-    def __init__(self, xmltree):
-        self.Items = [PlayItem(item) for item in list(xmltree)]
+    def __init__(self):
+        pass
 
+    @classmethod
+    def fromxmltree(cls, xmltree):
+        self = cls()
+        self.Items = [PlayItem.fromxmlelement(item) for item in list(xmltree)]
+        return self
+
+    @classmethod
+    def fromdict(cls, data):
+        self = cls()
+        self.Items = [PlayItem.fromdict(item) for item in data['PlayList']['PlayItem']]
+        return self
+    
     def __str__(self):
         tmp = ""
         for i in self.Items:
             tmp+=str(i)+"\n"
         return f"<PlayList>\n{tmp}</PlayList>"
-    
+     
     def __repr__(self):
-        return str(self.__str__().encode('utf-8').decode('utf-8'))
-    
+        return f"Playlist from {self.Items[0].Vrijeme} to {self.Items[len(self.Items)-1].Kraj})"
+     
     def __list__(self):
         return self.Items
     
     def get_xml_element(self):
-        return ElementTree.fromstring(self.__str__().encode(encoding))
+        return ElementTree.fromstring(self.__str__().encode('windows-1250'))
     
-

@@ -1,59 +1,106 @@
 from datetime import datetime as dt
 from datetime import timedelta
 import xml.etree.ElementTree as ElementTree
-
-from datetime import datetime as dt
-from datetime import timedelta
+import json
+from dicttoxml import dicttoxml
 
 
 class PlayItem(object):
-    def __init__(self, xmlitem):
-        self.ID = list(xmlitem)[0].text
-        self.Naziv = list(xmlitem)[1].text
-        self.Autor = list(xmlitem)[2].text
-        self.Album = list(xmlitem)[3].text
-        self.Info = list(xmlitem)[4].text
-        self.Tip = list(xmlitem)[5].text
-        self.Color = list(xmlitem)[6].text
-        self.NaKanalu = list(xmlitem)[7].text
-        self.PathName = list(xmlitem)[8].text
-        self.ItemType = list(xmlitem)[9].text
-        self.StartCue = list(xmlitem)[10].text
-        self.EndCue = list(xmlitem)[11].text
-        self.Pocetak = list(xmlitem)[12].text
-        self.Trajanje = list(xmlitem)[13].text
-        self.Vrijeme = list(xmlitem)[14].text
-        self.StvarnoVrijemePocetka = list(xmlitem)[15].text
-        self.VrijemeMinTermin = list(xmlitem)[16].text
-        self.VrijemeMaxTermin = list(xmlitem)[17].text
-        self.PrviU_Bloku = list(xmlitem)[18].text
-        self.ZadnjiU_Bloku = list(xmlitem)[19].text
-        self.JediniU_Bloku = list(xmlitem)[20].text
-        self.FiksniU_Terminu = list(xmlitem)[21].text
-        self.Reklama = list(xmlitem)[22].text
-        self.WaveIn = list(xmlitem)[23].text
-        self.SoftIn = list(xmlitem)[24].text
-        self.SoftOut = list(xmlitem)[25].text
-        self.Volume = list(xmlitem)[26].text
-        self.OriginalStartCue = list(xmlitem)[27].text
-        self.OriginalEndCue = list(xmlitem)[28].text
-        self.OriginalPocetak = list(xmlitem)[29].text
-        self.OriginalTrajanje = list(xmlitem)[30].text
+    def __init__(self):
+        pass
+
+    @classmethod
+    def fromxmlelement(cls, xmlitem):
+        self = cls()
+        self.ID = int(xmlitem[0].text)
+        self.Naziv = xmlitem[1].text
+        self.Autor = xmlitem[2].text
+        self.Album = xmlitem[3].text
+        self.Info = xmlitem[4].text
+        self.Tip = int(xmlitem[5].text)
+        self.Color = xmlitem[6].text
+        self.NaKanalu = int(xmlitem[7].text)
+        self.PathName = xmlitem[8].text
+        self.ItemType = int(xmlitem[9].text)
+        self.StartCue = float(xmlitem[10].text)
+        self.EndCue = float(xmlitem[11].text)
+        self.Pocetak = float(xmlitem[12].text)
+        self.Trajanje = float(xmlitem[13].text)
+        self.Vrijeme = Date.fromisoformat(xmlitem[14].text)
+        self.StvarnoVrijemePocetka = Date.fromisoformat(xmlitem[15].text)
+        self.VrijemeMinTermin = Date.fromisoformat(xmlitem[16].text)
+        self.VrijemeMaxTermin = Date.fromisoformat(xmlitem[17].text)
+        self.PrviU_Bloku = xmlitem[18].text
+        self.ZadnjiU_Bloku = xmlitem[19].text
+        self.JediniU_Bloku = xmlitem[20].text
+        self.FiksniU_Terminu = xmlitem[21].text
+        self.Reklama = xmlitem[22].text
+        self.WaveIn = xmlitem[23].text
+        self.SoftIn = int(xmlitem[24].text)
+        self.SoftOut = int(xmlitem[25].text)
+        self.Volume = int(xmlitem[26].text)
+        self.OriginalStartCue = float(xmlitem[27].text)
+        self.OriginalEndCue = float(xmlitem[28].text)
+        self.OriginalPocetak = float(xmlitem[29].text)
+        self.OriginalTrajanje = float(xmlitem[30].text)
+        return self
     
+    @classmethod
+    def fromdict(cls, data):
+        self = cls()
+        self.ID = int(data['ID'])
+        self.Naziv = data['Naziv']
+        self.Autor = data['Autor']
+        self.Album = data['Album']
+        self.Info = data['Info']
+        self.Tip = int(data['Tip'])
+        self.Color = data['Color']
+        self.NaKanalu = int(data['NaKanalu'])
+        self.PathName = data['PathName']
+        self.ItemType = int(data['ItemType'])
+        self.StartCue = float(data['StartCue'])
+        self.EndCue = float(data['EndCue'])
+        self.Pocetak = float(data['Pocetak'])
+        self.Trajanje = float(data['Trajanje'])
+        self.Vrijeme = Date.fromisoformat(data['Vrijeme'])
+        self.StvarnoVrijemePocetka = Date.fromisoformat(data['StvarnoVrijemePocetka'])
+        self.VrijemeMinTermin = Date.fromisoformat(data['VrijemeMinTermin'])
+        self.VrijemeMaxTermin = Date.fromisoformat(data['VrijemeMaxTermin'])
+        self.PrviU_Bloku = data['PrviU_Bloku']
+        self.ZadnjiU_Bloku = data['ZadnjiU_Bloku']
+        self.JediniU_Bloku = data['JediniU_Bloku']
+        self.FiksniU_Terminu = data['FiksniU_Terminu']
+        self.Reklama = data['Reklama'].lower() == 'true'
+        self.WaveIn = data['WaveIn'].lower() == 'true'
+        self.SoftIn = int(data['SoftIn'])
+        self.SoftOut = int(data['SoftOut'])
+        self.Volume = int(data['Volume'])
+        self.OriginalStartCue = float(data['OriginalStartCue'])
+        self.OriginalEndCue = float(data['OriginalEndCue'])
+        self.OriginalPocetak = float(data['OriginalPocetak'])
+        self.OriginalTrajanje = float(data['OriginalTrajanje'])
+        return self
+        
+
+    def as_json(self):
+        return json.dumps({ str(key): str(val) for key, val in self.__dict__.items()})
+
     def __str__(self):
-        return f"{self.Autor} by {self.Naziv}"
+        return f"<PlayItem>{dicttoxml({ str(key): str(val) for key, val in self.__dict__.items()}, custom_root='PlayItem', attr_type=False, root=False).decode('windows-1250')}</PlayItem>"
 
     def __repr__(self):
-        return self.__str__()
+        return f"{self.Naziv} by {self.Autor} @ {self.Vrijeme}"
 
-    def to_xml_element(self):
-        return ElementTree.fromstring(str(self))
-
-    def get_time(self):
-        return dt.fromisoformat(self.Vrijeme)
-
-    def get_duration_as_timedelta(self):
-        return timedelta(seconds=float(self.Trajanje))
+    @property
+    def Duration(self):
+        return timedelta(seconds=self.Trajanje)
+    @Duration.setter
+    def Duration(self, value):
+        self.Trajanje = value.total_seconds()
+    
+    @property
+    def Kraj(self):
+        return self.Vrijeme+self.Duration
 
     def get_time_of_next(self):
         return self.get_time()+self.get_duration_as_timedelta()
@@ -61,6 +108,9 @@ class PlayItem(object):
 
 
 
+class Date(dt):
+    def __str__(self):
+        return self.isoformat()
 
 
 

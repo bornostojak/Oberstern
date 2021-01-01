@@ -1,11 +1,11 @@
-from xml.etree import ElementTree
-from anngel.fireplay import PlayItem, PlayList
+#from xml.etree import ElementTree
+#from anngel.fireplay import PlayItem, PlayList
 
-# define a database operator!!!??? (sqlite)
+# Define a database operator!!!??? (sqlite)
 # 
 
 
-# kriteriji
+# Kriteriji
 #   -Beginning
 #   -End
 #   -Duration
@@ -14,19 +14,21 @@ from anngel.fireplay import PlayItem, PlayList
 #   -Key
 #   -BPM
 #   -Measure
-#   -Start/End
-#   -SlowdownRate
+#   -Slowdown
 #   -Transition In/Out (EE, E, M, MH, H)
-#   -Transition Type In/Out ("Fade", "Instant", "Slowing Down") 
+#   -Transition Type In/Out ("Fade", "Instant", "Slowdown") 
 #   -Vox In/Out
 #   -Link In/Out
 #   -Fade In/Out
 
 
 
-s
+
 def main():
     pass
+    # Create a playlist from a file
+    # Insert necessary elemnts into the file
+    # Mix the file by comparing the list files to the database data
 
 if __name__ == "__main__":
     main()
