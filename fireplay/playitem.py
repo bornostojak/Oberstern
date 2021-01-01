@@ -6,11 +6,25 @@ from dicttoxml import dicttoxml
 
 
 class PlayItem(object):
+    """
+    Object containing relevant song data.
+
+    """
+
     def __init__(self):
+        """
+        Initialize an empty PlayItem with no elements loaded.
+
+        """
         pass
 
     @classmethod
     def fromxmlelement(cls, xmlitem):
+        """
+        Create a PlayItem from a xml.etree.ElementTree element containing PlayItem data.
+
+        """
+
         self = cls()
         self.ID = int(xmlitem[0].text)
         self.Naziv = xmlitem[1].text
@@ -47,6 +61,11 @@ class PlayItem(object):
     
     @classmethod
     def fromdict(cls, data):
+        """
+        Create a PlayItem from a dictionary object containing PlayItem data.
+
+        """
+
         self = cls()
         self.ID = int(data['ID'])
         self.Naziv = data['Naziv']
@@ -83,27 +102,44 @@ class PlayItem(object):
         
 
     def as_json(self):
+        """
+        Returns a JSON string representation of the PlayItem.
+        """
         return json.dumps({ str(key): str(val) for key, val in self.__dict__.items()})
 
     def __str__(self):
+        """
+        Returns a XML string representation of the PlayItem.
+        """
+
         return f"<PlayItem>{dicttoxml({ str(key): str(val) for key, val in self.__dict__.items()}, custom_root='PlayItem', attr_type=False, root=False).decode('windows-1250')}</PlayItem>"
 
     def __repr__(self):
+        """
+        Returns a simplified string version of the object with the following structure:
+
+        'Author Name - Song Title @ Time Of Start'
+        """
+
         return f"{self.Naziv} by {self.Autor} @ {self.Vrijeme}"
 
     @property
     def Duration(self):
+        """
+        Returns a timedelta representation of the songs duration.
+        It allows for simpler computing and calculating of song length with respect to datetime data.
+        """
         return timedelta(seconds=self.Trajanje)
     @Duration.setter
     def Duration(self, value):
         self.Trajanje = value.total_seconds()
     
     @property
-    def Kraj(self):
+    def EndOfSong(self):
+        """
+        Returns the datetime data indicating when to pull the next item in the list.
+        """
         return self.Vrijeme+self.Duration
-
-    def get_time_of_next(self):
-        return self.get_time()+self.get_duration_as_timedelta()
 
 
 

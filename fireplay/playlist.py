@@ -27,7 +27,7 @@ class PlayList(object):
         return f"<PlayList>\n{tmp}</PlayList>"
      
     def __repr__(self):
-        return f"Playlist from {self.Items[0].Vrijeme} to {self.Items[len(self.Items)-1].Kraj})"
+        return f"Playlist from {self.Items[0].Vrijeme} to {self.Items[len(self.Items)-1].EndOfSong})"
      
     def __list__(self):
         return self.Items
