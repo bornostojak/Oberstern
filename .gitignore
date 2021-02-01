@@ -6,3 +6,5 @@ kriteriji.ods
 testing/
 fireplay
 fireplay/oldplayitem
+data/
+test.py
